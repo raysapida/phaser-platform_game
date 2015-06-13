@@ -23,6 +23,11 @@ GameStates.Game.prototype = {
     this.setupPlayer();
     cursors = this.input.keyboard.createCursorKeys();
     jumpButton = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    //collision on blockedLayer
+    //setCollisionBetween(start, stop, collides, layer, recalculate)
+    map.setCollisionBetween(781, 786, true, 'blocklayer');
+    map.setCollisionBetween(463, 464, true, 'blocklayer');
+    map.setCollision(779, true, 'blocklayer');
   },
 
   setupPlayer: function () {
@@ -36,6 +41,7 @@ GameStates.Game.prototype = {
   },
 
   update: function () {
+    this.game.physics.arcade.collide(player, blockLayer);
     player.body.velocity.x = 0; //default speed - stationary
 
     if (cursors.left.isDown) {
