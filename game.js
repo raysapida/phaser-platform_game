@@ -26,6 +26,8 @@ GameStates.Game.prototype = {
     player.scale.setTo(1.1, 1.1);
     player.body.collideWorldBounds = true;
     player.body.setSize(20, 32, 0, 0);
+    player.anchor.setTo(.5, 1); //so it flips around its middle
+    player.animations.add('move', [5, 6, 7, 8], 10, true);
   },
 
   update: function () { },
