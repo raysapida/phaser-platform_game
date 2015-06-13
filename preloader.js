@@ -11,6 +11,7 @@ GameStates.Preloader.prototype = {
     // load all game assets
     // images, spritesheets, atlases, audio etc..
     this.load.image('logo', 'assets/phaser2.png');
+    this.load.image('bg', 'assets/scifi_platform_BG1.jpg')
     this.load.tilemap('myTilemap', 'assets/tilemaps/scifi.json', null, Phaser.Tilemap.TILED_JSON);
     this.load.image('myTileset', "assets/tilemaps/scifi_platformTiles_32x32.png");
   },
