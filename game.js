@@ -6,6 +6,7 @@ var player;
 var jumpTimer = 0;
 var cursors;
 var jumpButton;
+var enemySpeed = 40;
 
 GameStates.Game = function (game) {
 
@@ -52,8 +53,13 @@ GameStates.Game.prototype = {
     skeleton.animations.play('move-enemy-right', 10, true); // get enemy moving
   },
 
+  moveSkeleton: function () {
+        skeleton.body.velocity.x = enemySpeed;
+  },
+
   update: function () {
-    this.game.physics.arcade.collide(player, blockLayer);
+    this.physics.arcade.collide(skeleton, blockLayer, this.moveSkeleton);
+    this.physics.arcade.collide(player, blockLayer);
     player.body.velocity.x = 0; //default speed - stationary
 
     if (cursors.left.isDown) {
@@ -73,7 +79,7 @@ GameStates.Game.prototype = {
 
     if (jumpButton.isDown && player.body.onFloor() && this.time.now > jumpTimer) {
       player.body.velocity.y = -250;
-      jumpTimer = this.game.time.now + 750;
+      jumpTimer = this.time.now + 750;
     }
   },
 
