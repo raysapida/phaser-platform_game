@@ -3,6 +3,9 @@ var backgroundLayer;
 var blockLayer;
 var bg;
 var player;
+var jumpTimer = 0;
+var cursors;
+var jumpButton;
 
 GameStates.Game = function (game) {
 
@@ -18,6 +21,8 @@ GameStates.Game.prototype = {
     blockLayer = map.createLayer('blocklayer');
     this.physics.arcade.gravity.y = 300;
     this.setupPlayer();
+    cursors = this.input.keyboard.createCursorKeys();
+    jumpButton = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
   },
 
   setupPlayer: function () {
@@ -30,7 +35,29 @@ GameStates.Game.prototype = {
     player.animations.add('move', [5, 6, 7, 8], 10, true);
   },
 
-  update: function () { },
+  update: function () {
+    player.body.velocity.x = 0; //default speed - stationary
+
+    if (cursors.left.isDown) {
+      player.scale.x = -1;
+      player.body.velocity.x = -150;
+      player.animations.play('move');
+    }
+    else if (cursors.right.isDown) {
+      player.scale.x = 1;
+      player.body.velocity.x = 150;
+      player.animations.play('move');
+    }
+    else {
+      player.animations.stop();
+      player.frame = 5;
+    }
+
+    if (jumpButton.isDown && player.body.onFloor() && this.time.now > jumpTimer) {
+      player.body.velocity.y = -250;
+      jumpTimer = game.time.now + 750;
+    }
+  },
 
   render: function () { },
 };
