@@ -61,7 +61,7 @@ GameStates.Game.prototype = {
 
     if (jumpButton.isDown && player.body.onFloor() && this.time.now > jumpTimer) {
       player.body.velocity.y = -250;
-      jumpTimer = game.time.now + 750;
+      jumpTimer = this.game.time.now + 750;
     }
   },
 
