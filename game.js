@@ -21,6 +21,7 @@ GameStates.Game.prototype = {
     blockLayer = map.createLayer('blocklayer');
     this.physics.arcade.gravity.y = 300;
     this.setupPlayer();
+    this.setupEnemy();
     cursors = this.input.keyboard.createCursorKeys();
     jumpButton = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     //collision on blockedLayer
@@ -38,6 +39,17 @@ GameStates.Game.prototype = {
     player.body.setSize(20, 32, 0, 0);
     player.anchor.setTo(.5, 1); //so it flips around its middle
     player.animations.add('move', [5, 6, 7, 8], 10, true);
+  },
+
+  setupEnemy: function () {
+    skeleton = this.add.sprite(400, 400, 'skeleton'); //50 x 32 = starting position
+    this.physics.enable(skeleton, Phaser.Physics.ARCADE);
+    skeleton.body.collideWorldBounds = true;
+    skeleton.body.setSize(16, 40, 0, -3);
+    skeleton.anchor.setTo(.5, 1); //so it flips around its middle
+    skeleton.animations.add('move-enemy-right', [148, 149, 150, 151], 10, true);
+    skeleton.animations.add('move-enemy-left', [118, 119, 120, 121], 10, true);
+    skeleton.animations.play('move-enemy-right', 10, true); // get enemy moving
   },
 
   update: function () {

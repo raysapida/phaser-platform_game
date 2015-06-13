@@ -15,6 +15,7 @@ GameStates.Preloader.prototype = {
     this.load.tilemap('myTilemap', 'assets/tilemaps/scifi.json', null, Phaser.Tilemap.TILED_JSON);
     this.load.image('myTileset', "assets/tilemaps/scifi_platformTiles_32x32.png");
     this.load.spritesheet('dude', 'assets/dude.png', 32, 48);
+    this.load.spritesheet('skeleton', 'assets/skeleton_3.png', 64, 64);
   },
 
   create: function () {
