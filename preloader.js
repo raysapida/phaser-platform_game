@@ -14,11 +14,12 @@ GameStates.Preloader.prototype = {
     this.load.image('bg', 'assets/scifi_platform_BG1.jpg')
     this.load.tilemap('myTilemap', 'assets/tilemaps/scifi.json', null, Phaser.Tilemap.TILED_JSON);
     this.load.image('myTileset', "assets/tilemaps/scifi_platformTiles_32x32.png");
+    this.load.spritesheet('dude', 'assets/dude.png', 32, 48);
   },
 
-    create: function () {
-      //call next state
-      //this.state.start('MainMenu');
-      this.state.start('Game');
-    }
+  create: function () {
+    //call next state
+    //this.state.start('MainMenu');
+    this.state.start('Game');
+  }
 };
