@@ -16,6 +16,7 @@ GameStates.Preloader.prototype = {
     this.load.image('myTileset', "assets/tilemaps/scifi_platformTiles_32x32.png");
     this.load.spritesheet('dude', 'assets/dude.png', 32, 48);
     this.load.spritesheet('skeleton', 'assets/skeleton_3.png', 64, 64);
+    this.load.image('treasure', 'assets/star2.png');
   },
 
   create: function () {

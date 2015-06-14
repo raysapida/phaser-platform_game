@@ -8,6 +8,8 @@ var cursors;
 var jumpButton;
 var enemySpeed = 40;
 var currentDir = "right";
+var treasure;
+var treasureCollected = false;
 
 GameStates.Game = function (game) {
 
@@ -31,6 +33,7 @@ GameStates.Game.prototype = {
     map.setCollisionBetween(781, 786, true, 'blocklayer');
     map.setCollisionBetween(463, 464, true, 'blocklayer');
     map.setCollision(779, true, 'blocklayer');
+    this.setupTreasure();
   },
 
   setupPlayer: function () {
@@ -52,6 +55,11 @@ GameStates.Game.prototype = {
     skeleton.animations.add('move-enemy-right', [148, 149, 150, 151], 10, true);
     skeleton.animations.add('move-enemy-left', [118, 119, 120, 121], 10, true);
     skeleton.animations.play('move-enemy-right', 10, true); // get enemy moving
+  },
+
+  setupTreasure: function () {
+    treasure = this.add.sprite(565, 550, 'treasure');
+    this.physics.enable(treasure, Phaser.Physics.ARCADE);
   },
 
   moveSkeleton: function () {
@@ -80,7 +88,13 @@ GameStates.Game.prototype = {
     }
   },
 
+  treasureCollect: function () {
+    treasure.kill();
+    treasureCollected = true;
+  },
+
   update: function () {
+    this.physics.arcade.collide(treasure, blockLayer);
     this.physics.arcade.collide(skeleton, blockLayer, this.moveSkeleton);
     this.physics.arcade.collide(player, blockLayer);
     player.body.velocity.x = 0; //default speed - stationary
@@ -130,6 +144,9 @@ GameStates.Game.prototype = {
         skeleton.animations.play('move-enemy-right');
       }
     }
+
+    //treasure collected
+    this.physics.arcade.overlap(player, treasure, this.treasureCollect, null, this);
   },
 
   render: function () { },
