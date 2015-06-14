@@ -10,6 +10,8 @@ var enemySpeed = 40;
 var currentDir = "right";
 var treasure;
 var treasureCollected = false;
+var playerLives = 3;
+var lives;
 
 GameStates.Game = function (game) {
 
@@ -34,6 +36,7 @@ GameStates.Game.prototype = {
     map.setCollisionBetween(463, 464, true, 'blocklayer');
     map.setCollision(779, true, 'blocklayer');
     this.setupTreasure();
+    this.setupPlayerLives();
   },
 
   setupPlayer: function () {
@@ -50,6 +53,18 @@ GameStates.Game.prototype = {
     }
     else {
       player.body.collideWorldBounds = true;
+    }
+  },
+
+  setupPlayerLives: function () {
+    lives = this.add.group();
+    // calculate location of first life icon
+    var firstLifeIconX = 64;
+    for (var i = 0; i < playerLives; i++) {
+      var life = lives.create(firstLifeIconX + (30 * i),
+                              30, 'dude');
+      life.scale.setTo(0.5, 0.5);
+      life.anchor.setTo(0.5, 0.5);
     }
   },
 
@@ -74,8 +89,14 @@ GameStates.Game.prototype = {
   },
 
   playerHit: function () {
-    player.kill();
-    this.setupPlayer();
+    var life = lives.getFirstAlive();
+    if (life !== null) {
+      life.kill();
+      player.kill();
+      this.setupPlayer();
+    } else {
+      player.kill();
+    }
   },
 
   checkForCliff: function (side) {
