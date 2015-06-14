@@ -54,7 +54,12 @@ GameStates.Game.prototype = {
   },
 
   moveSkeleton: function () {
-        skeleton.body.velocity.x = enemySpeed;
+    skeleton.body.velocity.x = enemySpeed;
+  },
+
+  playerHit: function () {
+    player.kill();
+    this.setupPlayer();
   },
 
   update: function () {
@@ -81,6 +86,8 @@ GameStates.Game.prototype = {
       player.body.velocity.y = -250;
       jumpTimer = this.time.now + 750;
     }
+    //player death
+    this.physics.arcade.overlap(player, skeleton, this.playerHit, null, this);
   },
 
   render: function () { },
