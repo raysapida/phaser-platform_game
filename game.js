@@ -188,7 +188,7 @@ GameStates.Game.prototype = {
     var style = { font: "65px Arial", fill: "#ff0044", align: "center" };
     this.endText = this.add.text(this.width / 2, this.height / 2 - 60, message, style);
     this.endText.anchor.setTo(0.5, 0);
-    //To Do: exit to main menu
+    this.state.start('MainMenu');
   },
 
   render: function () { },
