@@ -44,6 +44,13 @@ GameStates.Game.prototype = {
     player.body.setSize(20, 32, 0, 0);
     player.anchor.setTo(.5, 1); //so it flips around its middle
     player.animations.add('move', [5, 6, 7, 8], 10, true);
+    //player.body.collideWorldBounds = true;
+    if (treasureCollected == true) {
+      player.body.collideWorldBounds = false;
+    }
+    else {
+      player.body.collideWorldBounds = true;
+    }
   },
 
   setupEnemy: function () {
@@ -91,6 +98,7 @@ GameStates.Game.prototype = {
   treasureCollect: function () {
     treasure.kill();
     treasureCollected = true;
+    player.body.collideWorldBounds = false;
   },
 
   update: function () {
@@ -147,6 +155,10 @@ GameStates.Game.prototype = {
 
     //treasure collected
     this.physics.arcade.overlap(player, treasure, this.treasureCollect, null, this);
+
+    if (treasureCollected && player.position.x > map.widthInPixels) {
+      //end level here     
+    }
   },
 
   render: function () { },
