@@ -15,6 +15,6 @@ GameStates.MainMenu.prototype = {
         this.enterKey.onDown.add(this.playGame, this);
     },
     playGame: function () {
-        this.state.start('Game');
+        this.state.start('Level1');
     }
 };

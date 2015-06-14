@@ -13,11 +13,11 @@ var treasureCollected = false;
 var playerLives = 3;
 var lives;
 
-GameStates.Game = function (game) {
+GameStates.Level1 = function (game) {
 
 };
 
-GameStates.Game.prototype = {
+GameStates.Level1.prototype = {
 
   create: function () {
     map = this.add.tilemap('myTilemap');
@@ -179,7 +179,8 @@ GameStates.Game.prototype = {
     this.physics.arcade.overlap(player, treasure, this.treasureCollect, null, this);
 
     if (treasureCollected && player.position.x > map.widthInPixels) {
-      //end level here     
+      //end level here
+      this.state.start('Level2');
     }
   },
 
