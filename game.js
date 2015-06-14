@@ -96,6 +96,7 @@ GameStates.Game.prototype = {
       this.setupPlayer();
     } else {
       player.kill();
+      this.gameOver();
     }
   },
 
@@ -180,6 +181,14 @@ GameStates.Game.prototype = {
     if (treasureCollected && player.position.x > map.widthInPixels) {
       //end level here     
     }
+  },
+
+  gameOver: function () {
+    var message = "Game Over!";
+    var style = { font: "65px Arial", fill: "#ff0044", align: "center" };
+    this.endText = this.add.text(this.width / 2, this.height / 2 - 60, message, style);
+    this.endText.anchor.setTo(0.5, 0);
+    //To Do: exit to main menu
   },
 
   render: function () { },
