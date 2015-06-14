@@ -7,6 +7,7 @@ var jumpTimer = 0;
 var cursors;
 var jumpButton;
 var enemySpeed = 40;
+var currentDir = "right";
 
 GameStates.Game = function (game) {
 
@@ -62,6 +63,23 @@ GameStates.Game.prototype = {
     this.setupPlayer();
   },
 
+  checkForCliff: function (side) {
+    var offsetX; //check tile ahead of sprite as opposed to right under
+    if (side == "left") {
+      offsetX = -3;
+    } else if (side == "right") {
+      offsetX = 23;
+    }
+
+    var tile = map.getTileWorldXY(skeleton.body.x + offsetX, skeleton.body.y + 48, 32, 32, blockLayer);
+
+    if (skeleton.body.onFloor() && tile == null) {
+      return true;
+    } else {
+      return false;
+    }
+  },
+
   update: function () {
     this.physics.arcade.collide(skeleton, blockLayer, this.moveSkeleton);
     this.physics.arcade.collide(player, blockLayer);
@@ -88,6 +106,30 @@ GameStates.Game.prototype = {
     }
     //player death
     this.physics.arcade.overlap(player, skeleton, this.playerHit, null, this);
+
+    if (skeleton.body.blocked.right == true && currentDir == "right") {
+      //player.x = 12;
+      enemySpeed *= -1;
+      currentDir = "left";
+      skeleton.animations.play('move-enemy-left');
+    }
+    else if (skeleton.body.blocked.left == true && currentDir == "left") {
+      //player.x = 12;
+      enemySpeed *= -1;
+      currentDir = "right";
+      skeleton.animations.play('move-enemy-right');
+    }
+    else if (this.checkForCliff(currentDir) == true) {
+      enemySpeed *= -1;
+      if (currentDir == "right") {
+        currentDir = "left";
+        skeleton.animations.play('move-enemy-left');
+      }
+      else {
+        currentDir = "right";
+        skeleton.animations.play('move-enemy-right');
+      }
+    }
   },
 
   render: function () { },
